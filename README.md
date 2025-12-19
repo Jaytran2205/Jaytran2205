@@ -34,7 +34,7 @@
 ║             ╚██████╗   ██║   ██████╔╝███████╗██║  ██║                 ║
 ║              ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝                 ║
 ║                                                                       ║
-║     🔒 CYBERSECURITY | 🛡️ SECURITY RESEARCH | 🔐 ETHICAL HACKING     ║
+ ║      🔒 CYBERSECURITY | 🛡️ SECURITY RESEARCH | 🔐 ETHICAL HACKING   ║
 ║                                                                       ║
 ╚═══════════════════════════════════════════════════════════════════════╝
 ```
@@ -419,4 +419,5 @@ class Developer:
 </div>
 
 </div>
+
 
