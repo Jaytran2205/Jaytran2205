@@ -1,6 +1,6 @@
 <!-- BANNER -->
 <p align="center">
-  <img src="./assets/banner.png" alt="Banner" width="100%" />
+  <img src="./assets/github-banner.png" alt="Banner" width="100%" />
 </p>
 
 <br />
@@ -401,3 +401,4 @@ class Developer:
 </div>
 
 </div>
+
