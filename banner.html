@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaydev2205 - Animated Banner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #0a0e27;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1629 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Starfield Background */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 1000px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+            animation: slideDown 1s ease-out;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.8em;
+            color: #58a6ff;
+            margin-bottom: 30px;
+            animation: slideUp 1s ease-out;
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(88, 166, 255, 0.6));
+            transition: transform 0.3s;
+        }
+
+        .icon:nth-child(1) { animation-delay: 0s; }
+        .icon:nth-child(2) { animation-delay: 0.3s; }
+        .icon:nth-child(3) { animation-delay: 0.6s; }
+        .icon:nth-child(4) { animation-delay: 0.9s; }
+
+        .icon:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .earth-container {
+            position: absolute;
+            right: 50px;
+            bottom: 50px;
+            z-index: 5;
+        }
+
+        .earth {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #4da6ff, #0066cc);
+            animation: rotate 20s linear infinite;
+            box-shadow: 0 0 40px rgba(88, 166, 255, 0.5), inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .earth::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at 35% 35%, rgba(255, 255, 255, 0.2));
+            animation: rotate 20s linear infinite reverse;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(88, 166, 255, 0.8);
+            }
+        }
+
+        h1 {
+            animation: slideDown 1s ease-out, pulse 2s ease-in-out 1s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            .subtitle {
+                font-size: 1.2em;
+            }
+            .earth {
+                width: 100px;
+                height: 100px;
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="starCanvas"></canvas>
+        
+        <div class="content">
+            <h1>HELLO, I'M JAYDEV2205 FROM THE EARTH 🌍</h1>
+            
+            <div class="subtitle">
+                Student Developer | Cybersecurity Enthusiast
+            </div>
+
+            <div class="icons">
+                <div class="icon">🛡️</div>
+                <div class="icon">🔐</div>
+                <div class="icon">🐛</div>
+                <div class="icon">⚠️</div>
+            </div>
+        </div>
+
+        <div class="earth-container">
+            <canvas id="earthCanvas"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Starfield Animation
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Create stars
+        const stars = [];
+        for (let i = 0; i < 100; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                opacity: Math.random() * 0.5 + 0.5,
+                twinkleSpeed: Math.random() * 0.02 + 0.01
+            });
+        }
+
+        let animationFrame = 0;
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                // Twinkling effect
+                star.opacity += star.twinkleSpeed;
+                if (star.opacity >= 1 || star.opacity <= 0.3) {
+                    star.twinkleSpeed *= -1;
+                }
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Glow effect
+                ctx.fillStyle = `rgba(88, 166, 255, ${star.opacity * 0.3})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius * 2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            animationFrame++;
+            requestAnimationFrame(drawStars);
+        }
+
+        drawStars();
+
+        // Earth Canvas Animation
+        const earthCanvas = document.getElementById('earthCanvas');
+        const earthCtx = earthCanvas.getContext('2d');
+        
+        earthCanvas.width = 150;
+        earthCanvas.height = 150;
+        
+        let rotation = 0;
+
+        function drawEarth() {
+            const centerX = earthCanvas.width / 2;
+            const centerY = earthCanvas.height / 2;
+            const radius = 70;
+
+            // Clear canvas
+            earthCtx.clearRect(0, 0, earthCanvas.width, earthCanvas.height);
+
+            // Save context for rotation
+            earthCtx.save();
+            earthCtx.translate(centerX, centerY);
+            earthCtx.rotate(rotation);
+            earthCtx.translate(-centerX, -centerY);
+
+            // Draw ocean (blue background)
+            earthCtx.fillStyle = '#0066cc';
+            earthCtx.beginPath();
+            earthCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // Draw continents - simplified landmasses
+            earthCtx.fillStyle = '#2d8659';
+
+            // North America
+            earthCtx.beginPath();
+            earthCtx.ellipse(centerX - 40, centerY - 30, 25, 30, -0.3, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // South America
+            earthCtx.beginPath();
+            earthCtx.ellipse(centerX - 35, centerY + 20, 15, 20, -0.2, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // Europe & Africa
+            earthCtx.beginPath();
+            earthCtx.ellipse(centerX + 15, centerY - 20, 20, 35, 0.1, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // Asia
+            earthCtx.beginPath();
+            earthCtx.ellipse(centerX + 35, centerY - 15, 30, 25, 0.2, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // Australia
+            earthCtx.beginPath();
+            earthCtx.ellipse(centerX + 45, centerY + 25, 12, 15, 0, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // Restore context
+            earthCtx.restore();
+
+            // Draw outer glow
+            earthCtx.strokeStyle = 'rgba(88, 166, 255, 0.6)';
+            earthCtx.lineWidth = 2;
+            earthCtx.beginPath();
+            earthCtx.arc(centerX, centerY, radius + 5, 0, Math.PI * 2);
+            earthCtx.stroke();
+
+            // Draw inner shadow for 3D effect
+            const gradient = earthCtx.createRadialGradient(centerX - 20, centerY - 20, 0, centerX, centerY, radius);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.3)');
+            earthCtx.fillStyle = gradient;
+            earthCtx.beginPath();
+            earthCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            earthCtx.fill();
+
+            // Update rotation
+            rotation += 0.01;
+            requestAnimationFrame(drawEarth);
+        }
+
+        drawEarth();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
